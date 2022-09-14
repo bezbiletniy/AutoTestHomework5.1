@@ -18,7 +18,6 @@ class DeliveryTest {
 
     @BeforeEach
     void setup() {
-        Configuration.holdBrowserOpen=true;
         open("http://localhost:9999");
     }
 
@@ -36,7 +35,7 @@ class DeliveryTest {
         $x("//*[@data-test-id=\"phone\"]//self::input").setValue(validUser.getPhone());
         $x("//*[@data-test-id=\"agreement\"]").click();
         $x("//*[@class=\"button__text\"]").click();
-        $x("//*[@class='success-notification']").should(Condition.text("Успешно! Встреча успешно забронирована на " + firstMeetingDate), Duration.ofSeconds(15));
+        $x("//*[@data-test-id='notification']").shouldHave(Condition.text("Успешно! Встреча успешно забронирована на " + firstMeetingDate), Duration.ofSeconds(15));
 
         // TODO: добавить логику теста в рамках которого будет выполнено планирование и перепланирование встречи.
         // Для заполнения полей формы можно использовать пользователя validUser и строки с датами в переменных
