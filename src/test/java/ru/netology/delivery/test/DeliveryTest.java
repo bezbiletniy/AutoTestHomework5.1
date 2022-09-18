@@ -10,8 +10,7 @@ import ru.netology.delivery.data.DataGenerator;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -36,14 +35,11 @@ class DeliveryTest {
         $x("//*[@data-test-id=\"phone\"]//self::input").setValue(validUser.getPhone());
         $x("//*[@data-test-id=\"agreement\"]").click();
         $x("//span[text()='Запланировать']").click();
-        $x("//*[@data-test-id=\"success-notification\"]").shouldBe(visible).shouldHave(text("Успешно!\n" + "Встреча успешно запланирована на " + firstMeetingDate));
-        Thread.sleep(1*1000);
+        $x("//*[@data-test-id=\"success-notification\"]").shouldBe(appear).shouldHave(text("Успешно!\n" + "Встреча успешно запланирована на " + firstMeetingDate), Duration.ofSeconds(5));
         $x("//*[@data-test-id=\"date\"]//self::input").doubleClick().sendKeys(Keys.DELETE, secondMeetingDate);
         $x("//span[text()='Запланировать']").click();
-        $x("//*[@data-test-id=\"replan-notification\"]").shouldBe(visible).shouldHave(text("Необходимо подтверждение\n" + "У вас уже запланирована встреча на другую дату. Перепланировать?"));
-        Thread.sleep(1*1000);
+        $x("//*[@data-test-id=\"replan-notification\"]").shouldBe(appear).shouldHave(text("Необходимо подтверждение\n" + "У вас уже запланирована встреча на другую дату. Перепланировать?"), Duration.ofSeconds(5));
         $x("//span[text()='Перепланировать']").click();
-        $x("//*[@data-test-id=\"success-notification\"]").shouldBe(visible).shouldHave(text("Успешно!\n" + "Встреча успешно запланирована на " + secondMeetingDate));
-        Thread.sleep(1*1000);
+        $x("//*[@data-test-id=\"success-notification\"]").shouldBe(appear).shouldHave(text("Успешно!\n" + "Встреча успешно запланирована на " + secondMeetingDate), Duration.ofSeconds(5));
     }
 }
